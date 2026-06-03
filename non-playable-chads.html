@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Non-Playable Chads — NPC Collection</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: #1e1e1e;
+    --accent: #e8ff00;
+    --accent2: #ff3c3c;
+    --text: #f0f0f0;
+    --muted: #555;
+    --card-bg: #131313;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    background: var(--accent);
+    color: #000;
+    overflow: hidden;
+    padding: 10px 0;
+    white-space: nowrap;
+    border-bottom: 2px solid #000;
+  }
+  .marquee-inner {
+    display: inline-flex;
+    animation: marquee 18s linear infinite;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    gap: 0;
+  }
+  .marquee-inner span { padding: 0 30px; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 48px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .logo span { color: var(--text); }
+  nav .links { display: flex; gap: 32px; align-items: center; }
+  nav .links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    transition: color 0.2s;
+  }
+  nav .links a:hover { color: var(--accent); }
+  .btn-opensea {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 10px 22px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  .btn-opensea:hover { background: #fff; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 88vh;
+    padding: 0 48px;
+    gap: 0;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 0;
+    border-right: 1px solid var(--border);
+  }
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 8vw, 110px);
+    line-height: 0.95;
+    letter-spacing: -1px;
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    display: block;
+  }
+  .hero-desc {
+    color: #888;
+    line-height: 1.7;
+    font-size: 15px;
+    max-width: 420px;
+    margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 14px 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .btn-primary:hover { background: #fff; transform: translateY(-2px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 14px 32px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    margin-top: 56px;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+  .stat {
+    flex: 1;
+    padding-right: 28px;
+    border-right: 1px solid var(--border);
+    margin-right: 28px;
+  }
+  .stat:last-child { border-right: none; margin-right: 0; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* HERO RIGHT — scrolling gallery */
+  .hero-right {
+    padding: 40px 0 40px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: scrollDown 20s linear infinite;
+  }
+  .gallery-scroll:hover { animation-play-state: paused; }
+  @keyframes scrollDown {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+  .gallery-row { display: flex; gap: 12px; }
+  .gallery-thumb {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    transition: border-color 0.2s, transform 0.3s;
+    filter: grayscale(20%);
+  }
+  .gallery-thumb:hover {
+    border-color: var(--accent);
+    transform: scale(1.04);
+    filter: none;
+    z-index: 2;
+    position: relative;
+  }
+
+  /* GALLERY SECTION */
+  .section {
+    padding: 80px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 48px;
+  }
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .section-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .nft-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+  .nft-card {
+    background: var(--card-bg);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .nft-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.9) 100%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .nft-card:hover::before { opacity: 1; }
+  .nft-card img {
+    width: 100%;
+    aspect-ratio: 1;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    filter: grayscale(15%);
+  }
+  .nft-card:hover img { transform: scale(1.06); filter: none; }
+  .nft-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px;
+    z-index: 2;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .nft-card:hover .nft-info { transform: translateY(0); }
+  .nft-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .nft-trait {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #aaa;
+    letter-spacing: 1px;
+  }
+  .nft-number {
+    position: absolute;
+    top: 14px; left: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    background: rgba(0,0,0,0.7);
+    padding: 4px 8px;
+    letter-spacing: 2px;
+    z-index: 2;
+    border: 1px solid rgba(232,255,0,0.3);
+  }
+
+  /* ABOUT */
+  .about-section {
+    padding: 80px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    border-bottom: 1px solid var(--border);
+  }
+  .about-left {}
+  .about-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .about-text {
+    color: #777;
+    line-height: 1.85;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .about-text strong { color: var(--accent); font-weight: 500; }
+  .trait-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin-top: 32px;
+  }
+  .trait-item {
+    background: var(--card-bg);
+    padding: 20px;
+  }
+  .trait-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .trait-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 100px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: 'NPC';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 400px;
+    color: rgba(255,255,255,0.015);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    letter-spacing: 20px;
+    pointer-events: none;
+  }
+  .cta-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    letter-spacing: 3px;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .cta-section h2 em { font-style: normal; color: var(--accent); }
+  .cta-section p { color: #666; font-size: 14px; max-width: 480px; margin: 0 auto 40px; line-height: 1.7; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 36px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: var(--accent);
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 0 24px; }
+    .hero-left { border-right: none; padding: 60px 0; }
+    .hero-right { display: none; }
+    nav { padding: 18px 24px; }
+    nav .links { display: none; }
+    .about-section { grid-template-columns: 1fr; gap: 40px; }
+    .nft-grid { grid-template-columns: repeat(2, 1fr); }
+    .section { padding: 60px 24px; }
+    .about-section { padding: 60px 24px; }
+    .cta-section { padding: 80px 24px; }
+    footer { padding: 28px 24px; flex-direction: column; gap: 20px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>NON-PLAYABLE CHADS</span><span>✦</span>
+    <span>UNIQUE NFT COLLECTION</span><span>✦</span>
+    <span>AVAILABLE ON OPENSEA</span><span>✦</span>
+    <span>TV HEAD CHARACTERS</span><span>✦</span>
+    <span>NON-PLAYABLE CHADS</span><span>✦</span>
+    <span>UNIQUE NFT COLLECTION</span><span>✦</span>
+    <span>AVAILABLE ON OPENSEA</span><span>✦</span>
+    <span>TV HEAD CHARACTERS</span><span>✦</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#"><span>NPC</span> CHADS</a>
+  <div class="links">
+    <a href="#collection">Collection</a>
+    <a href="#about">About</a>
+    <a href="https://opensea.io/collection/non-playable-chads" target="_blank">OpenSea</a>
+    <a href="https://opensea.io/collection/non-playable-chads" class="btn-opensea" target="_blank">View on OpenSea ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-tag">// ERC-721 · Ethereum Network</p>
+    <h1>Non<em>Playable<br>Chads</em></h1>
+    <p class="hero-desc">A collection of unique TV-head characters drifting through infinite aesthetic worlds. No quests. No objectives. Just vibes and static.</p>
+    <div class="hero-actions">
+      <a href="https://opensea.io/collection/non-playable-chads" class="btn-primary" target="_blank">Browse Collection ↗</a>
+      <a href="#collection" class="btn-secondary">View Gallery</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">6+</div>
+        <div class="stat-label">Items</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">ETH</div>
+        <div class="stat-label">Network</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Vibes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="gallery-scroll" id="galleryScroll">
+      <!-- Row 1 -->
+      <div class="gallery-row">
+        <img src="1.jpeg" class="gallery-thumb" alt="NPC Chad 1">
+        <img src="3.jpeg" class="gallery-thumb" alt="NPC Chad 3">
+        <img src="5.jpeg" class="gallery-thumb" alt="NPC Chad 5">
+      </div>
+      <div class="gallery-row">
+        <img src="2.jpeg" class="gallery-thumb" alt="NPC Chad 2">
+        <img src="4.jpeg" class="gallery-thumb" alt="NPC Chad 4">
+        <img src="6.jpeg" class="gallery-thumb" alt="NPC Chad 6">
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="gallery-row">
+        <img src="1.jpeg" class="gallery-thumb" alt="NPC Chad 1">
+        <img src="3.jpeg" class="gallery-thumb" alt="NPC Chad 3">
+        <img src="5.jpeg" class="gallery-thumb" alt="NPC Chad 5">
+      </div>
+      <div class="gallery-row">
+        <img src="2.jpeg" class="gallery-thumb" alt="NPC Chad 2">
+        <img src="4.jpeg" class="gallery-thumb" alt="NPC Chad 4">
+        <img src="6.jpeg" class="gallery-thumb" alt="NPC Chad 6">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section class="section" id="collection">
+  <div class="section-header reveal">
+    <div>
+      <p class="section-tag">// Gallery</p>
+      <h2 class="section-title">The Chads</h2>
+    </div>
+    <div class="section-count">Showing 6 / collection</div>
+  </div>
+
+  <div class="nft-grid reveal">
+    <div class="nft-card">
+      <div class="nft-number">#001</div>
+      <img src="1.jpeg" alt="NPC Chad #001">
+      <div class="nft-info">
+        <div class="nft-name">NPC Chad #001</div>
+        <div class="nft-trait">Trait: Minimalist Monk · White Robe</div>
+      </div>
+    </div>
+    <div class="nft-card">
+      <div class="nft-number">#002</div>
+      <img src="2.jpeg" alt="NPC Chad #002">
+      <div class="nft-info">
+        <div class="nft-name">NPC Chad #002</div>
+        <div class="nft-trait">Trait: Dark Warrior · Red Cape</div>
+      </div>
+    </div>
+    <div class="nft-card">
+      <div class="nft-number">#003</div>
+      <img src="3.jpeg" alt="NPC Chad #003">
+      <div class="nft-info">
+        <div class="nft-name">NPC Chad #003</div>
+        <div class="nft-trait">Trait: Casual Chad · Beige Hoodie</div>
+      </div>
+    </div>
+    <div class="nft-card">
+      <div class="nft-number">#004</div>
+      <img src="4.jpeg" alt="NPC Chad #004">
+      <div class="nft-info">
+        <div class="nft-name">NPC Chad #004</div>
+        <div class="nft-trait">Trait: Ancient Mummy · Night Sky</div>
+      </div>
+    </div>
+    <div class="nft-card">
+      <div class="nft-number">#005</div>
+      <img src="5.jpeg" alt="NPC Chad #005">
+      <div class="nft-info">
+        <div class="nft-name">NPC Chad #005</div>
+        <div class="nft-trait">Trait: Survivor · Tactical Jacket</div>
+      </div>
+    </div>
+    <div class="nft-card">
+      <div class="nft-number">#006</div>
+      <img src="6.jpeg" alt="NPC Chad #006">
+      <div class="nft-info">
+        <div class="nft-name">NPC Chad #006</div>
+        <div class="nft-trait">Trait: Neutral Chad · Tan Hoodie</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-left reveal">
+    <p class="section-tag">// About the Collection</p>
+    <h2 class="section-title">Who Are The<br>NPC Chads?</h2>
+    <div class="trait-grid">
+      <div class="trait-item">
+        <div class="trait-label">Head Type</div>
+        <div class="trait-value">CRT Monitor</div>
+      </div>
+      <div class="trait-item">
+        <div class="trait-label">Screen</div>
+        <div class="trait-value">Always On</div>
+      </div>
+      <div class="trait-item">
+        <div class="trait-label">Outfits</div>
+        <div class="trait-value">Varied</div>
+      </div>
+      <div class="trait-item">
+        <div class="trait-label">Blockchain</div>
+        <div class="trait-value">Ethereum</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-right reveal">
+    <p class="about-text">
+      <strong>Non-Playable Chads</strong> are the background characters of the digital universe — faceless, expressionless, and yet somehow more interesting than the protagonist.
+    </p>
+    <p class="about-text">
+      Each Chad carries a <strong>blank CRT screen</strong> where a face should be. They wear different fits — from ancient robes to tactical gear — wandering through aesthetic worlds that have no maps and no end credits.
+    </p>
+    <p class="about-text">
+      Collect a Chad. <strong>Project whatever you want onto that screen.</strong> They'll never argue back.
+    </p>
+    <a href="https://opensea.io/collection/non-playable-chads" class="btn-primary" target="_blank" style="margin-top: 16px; display: inline-block;">View Full Collection ↗</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="reveal">Own a <em>Chad</em><br>Today</h2>
+  <p class="reveal">Available exclusively on OpenSea. Each piece is unique. No roadmap. No promises. Just art.</p>
+  <a href="https://opensea.io/collection/non-playable-chads" class="btn-primary reveal" target="_blank" style="font-size: 14px; padding: 18px 48px;">
+    Buy on OpenSea ↗
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">NPC CHADS</div>
+  <div class="footer-links">
+    <a href="https://opensea.io/collection/non-playable-chads" target="_blank">OpenSea</a>
+    <a href="#collection">Collection</a>
+    <a href="#about">About</a>
+  </div>
+  <div class="footer-copy">© 2026 Non-Playable Chads</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth anchor scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
+
